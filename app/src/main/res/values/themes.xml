@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#40C4FF</item>
+        <item name="colorPrimaryDark">#0091EA</item>
+        <item name="colorAccent">#00E676</item>
+    </style>
+</resources>

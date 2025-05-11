@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="blue">#0288D1</color> <!-- Original blue color for buttons -->
+    <color name="blue_dark">#0277BD</color> <!-- Darker blue for selected buttons -->
+    <color name="blue_light">#B3E5FC</color>
+
+    <color name="white">#FFFFFFFF</color>
+</resources>
