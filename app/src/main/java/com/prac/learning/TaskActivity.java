@@ -30,9 +30,12 @@ public class TaskActivity extends AppCompatActivity {
 
     private List<QuizResponse.Quiz> quizList;
     private int currentIndex = 0;
+
     private ArrayList<String> questionHistory = new ArrayList<>();
     private ArrayList<String> answerHistory = new ArrayList<>();
     private ArrayList<String> correctAnswers = new ArrayList<>();
+    private ArrayList<ArrayList<String>> optionsList = new ArrayList<>();
+
     private int score = 0;
 
     @Override
@@ -47,8 +50,6 @@ public class TaskActivity extends AppCompatActivity {
         submitBtn = findViewById(R.id.submitBtn);
 
         String topic = getIntent().getStringExtra("topic");
-
-        // Dynamically set heading and description
         taskTitle.setText(topic);
         taskDescription.setText("This task tests your knowledge on " + topic + ".");
 
@@ -68,6 +69,7 @@ public class TaskActivity extends AppCompatActivity {
             questionHistory.add(currentQuiz.getQuestion());
             answerHistory.add(selectedAnswer);
             correctAnswers.add(currentQuiz.getCorrect());
+            optionsList.add(new ArrayList<>(currentQuiz.getAnswers())); // ✅ Save options for this question
 
             if (selectedAnswer.equals(currentQuiz.getCorrect())) {
                 score++;
@@ -77,13 +79,14 @@ public class TaskActivity extends AppCompatActivity {
             if (currentIndex < quizList.size()) {
                 loadQuestion();
             } else {
-                // Pass all data to ResultActivity
+
                 Intent intent = new Intent(TaskActivity.this, ResultActivity.class);
                 intent.putExtra("score", score);
-                intent.putExtra("totalQuestions", quizList.size()); // Send the total number of questions
+                intent.putExtra("totalQuestions", quizList.size());
                 intent.putStringArrayListExtra("questions", questionHistory);
                 intent.putStringArrayListExtra("answers", answerHistory);
-                intent.putStringArrayListExtra("correctAnswers", correctAnswers); // Ensure you add this list
+                intent.putStringArrayListExtra("correctAnswers", correctAnswers);
+                intent.putExtra("optionsList", optionsList); // ✅ Add dynamic options
                 startActivity(intent);
                 finish();
             }
@@ -103,7 +106,6 @@ public class TaskActivity extends AppCompatActivity {
 
                     quizList = response.body().getQuizList();
                     loadQuestion();
-
                 } else {
                     Toast.makeText(TaskActivity.this, "No quiz questions found", Toast.LENGTH_SHORT).show();
                     finish();

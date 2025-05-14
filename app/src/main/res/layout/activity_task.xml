@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Title -->
+
         <TextView
             android:id="@+id/taskTitle"
             android:layout_width="wrap_content"
@@ -21,7 +21,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
 
-        <!-- Description -->
         <TextView
             android:id="@+id/taskDescription"
             android:layout_width="wrap_content"
@@ -30,7 +29,7 @@
             android:textColor="#E0F7FA"
             android:layout_marginBottom="16dp" />
 
-        <!-- Question Card -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

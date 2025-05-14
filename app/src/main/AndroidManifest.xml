@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prac.learning">
 
-    <!-- Required for accessing the internet -->
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -9,16 +9,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Personalised Learning"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
-        >
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <activity android:name=".ResultActivity" />
         <activity android:name=".TaskActivity" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".InterestsActivity" />
         <activity android:name=".SignupActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".UpgradeActivity" />
+        <activity android:name=".HistoryActivity" />
 
-        <!-- ✅ Launcher activity with android:exported="true" for Android 12+ -->
+        <!-- ✅ Launcher activity -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">

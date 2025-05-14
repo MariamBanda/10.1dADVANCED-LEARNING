@@ -43,7 +43,7 @@ dependencies {
 
     // Jetpack Compose (if you're using it)
     implementation("androidx.compose.material3:material3:1.2.0")
-
+    implementation("com.stripe:stripe-android:20.38.0")
     // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

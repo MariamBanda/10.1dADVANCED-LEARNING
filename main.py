@@ -4,13 +4,18 @@ import requests
 import traceback
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+import stripe
 
-# Load environment variables (e.g., HF_API_TOKEN)
+
 load_dotenv()
 
 API_URL = "https://router.huggingface.co/novita/v3/openai/chat/completions"
 MODEL = "deepseek/deepseek-v3-0324"
 API_KEY = os.getenv("HF_API_TOKEN")
+
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
 
 app = Flask(__name__)
 
@@ -122,6 +127,23 @@ def get_tasks():
     ]
 
     return jsonify({"tasks": filtered_tasks})
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment_intent():
+    try:
+        data = request.get_json()
+        amount = data.get("amount", 100)  # Amount in cents, e.g. $1.00
+        currency = data.get("currency", "usd")
+
+        intent = stripe.PaymentIntent.create(
+            amount=amount,
+            currency=currency,
+            automatic_payment_methods={"enabled": True},
+        )
+
+        return jsonify({"clientSecret": intent.client_secret})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 400
 
 
 @app.route('/generate_quiz', methods=['GET'])

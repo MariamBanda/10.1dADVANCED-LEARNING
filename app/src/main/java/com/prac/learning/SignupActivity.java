@@ -1,6 +1,7 @@
 package com.prac.learning;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,9 +44,16 @@ public class SignupActivity extends AppCompatActivity {
             } else if (!pw.equals(cpw)) {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             } else {
-                // Add user to database
+
                 String interests = "";
                 if (dbHelper.addUser(uname, em, pw, interests)) {
+
+                    SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                    prefs.edit()
+                        .putString("username", uname)
+                        .putString("email", em)
+                        .apply();
+
                     Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(SignupActivity.this, InterestsActivity.class);

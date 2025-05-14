@@ -1,12 +1,14 @@
 package com.prac.learning;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -41,18 +43,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     int passwordIndex = cursor.getColumnIndex("password");
                     int interestsIndex = cursor.getColumnIndex("interests");
+                    int emailIndex = cursor.getColumnIndex("email");
 
-
-                    if (passwordIndex != -1 && interestsIndex != -1) {
+                    if (passwordIndex != -1 && interestsIndex != -1 && emailIndex != -1) {
                         String storedPassword = cursor.getString(passwordIndex);
                         if (storedPassword.equals(password)) {
-                            // Successfully logged in
+
+                            String storedEmail = cursor.getString(emailIndex);
                             String storedInterests = cursor.getString(interestsIndex);
                             ArrayList<String> interestList = new ArrayList<>(Arrays.asList(storedInterests.split(",")));
+
+
+                            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                            prefs.edit()
+                                .putString("username", username)
+                                .putString("email", storedEmail)
+                                .apply();
+
                             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                             intent.putExtra("username", username);
                             intent.putStringArrayListExtra("interests", interestList);
-
                             startActivity(intent);
                             finish();
                         } else {
